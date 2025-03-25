@@ -1,93 +1,99 @@
 class Node:
-    """Class to represent a node in a linked list"""
     def __init__(self, data):
-        self.data = data  # Data of the node
-        self.next = None  # Pointer to the next node
+        self.data = data
+        self.next = None  # Initialize next as None
 
+# Function to insert a node at the end of the linked list
 def insert_end(head, n):
-    """Function to insert a node at the end of the linked list"""
-    if head is None:  
-        return Node(n)  # If list is empty, create a new node and return
-    
+    if head is None:
+        head = Node(n)  # Create a new node if the list is empty
+        return head
+    else:
+        temp = head
+        while temp:  # Traverse to the end of the list
+            prev = temp
+            temp = temp.next
+        newnode = Node(n)
+        prev.next = newnode  # Link the last node to the new node
+        return head
+
+# Function to display the linked list elements
+def display(head):
     temp = head
-    while temp.next:  # Traverse till the last node
+    if temp is None:
+        print("Empty List")
+        return
+    while temp:
+        print(temp.data)  # Print each node's data
         temp = temp.next
-    
-    temp.next = Node(n)  # Add new node at the end
+
+# Function to insert a node at the beginning of the linked list
+def insert_first(head, n):
+    temp = head
+    newnode = Node(n)
+    newnode.next = temp  # Point new node to the current head
+    head = newnode  # Update head to the new node
     return head
 
-def display(head):
-    """Function to display the linked list elements"""
-    if head is None:
-        print("Empty List")  # Handle empty list case
-        return
-    
-    temp = head
-    while temp:
-        print(temp.data, end=" -> ")  # Print data with arrows
-        temp = temp.next
-    print("None")  # Indicate end of the list
-
-def insert_first(head, n):
-    """Function to insert a node at the beginning of the linked list"""
-    newnode = Node(n)
-    newnode.next = head  # Point new node to current head
-    return newnode  # Return new node as the new head
-
+# Function to count the number of nodes in the linked list
 def count(head):
-    """Function to count the number of nodes in the linked list"""
     temp = head
     c = 0
+    if temp is None:
+        print("Empty List")
+        return c
     while temp:
-        c += 1  # Increase count for each node
+        c += 1  # Increment count for each node
         temp = temp.next
     return c
 
+# Function to search for a node in the linked list
 def search(head, n):
-    """Function to search for a node in the linked list"""
     temp = head
-    pos = 1  # Position starts from 1
+    pos = 0
+    if temp is None:
+        print("Empty List")
+        return 0
     while temp:
+        pos += 1
         if temp.data == n:
             return pos  # Return position if found
         temp = temp.next
-        pos += 1
     return -1  # Return -1 if not found
 
+# Function to delete a node with a given value
 def deletion(head, n):
-    """Function to delete a node from the linked list"""
-    if head is None:
+    temp = head
+    if temp is None:
         print("Empty List")
         return head
-
-    if head.data == n:  # If the first node contains the value
-        print("Deleted item:", head.data)
-        return head.next  # Update head to the next node
-
-    prev = head
-    temp = head.next
-
-    while temp:
-        if temp.data == n:
-            prev.next = temp.next  # Remove the node by changing pointer
-            print("Deleted item:", temp.data)
-            return head  # Return the updated head
+    elif temp.data == n:  # If the node to be deleted is the head
+        print("Deleted item:", temp.data)
+        head = temp.next
+        return head
+    else:
         prev = temp
         temp = temp.next
+        while temp:
+            if temp.data == n:
+                prev.next = temp.next # Remove the node from the list
+                print("Deleted item:", temp.data)
+                return head
+            prev = temp
+            temp = temp.next
+        print("Item Not found")
+        return head
 
-    print("Item Not Found")
-    return head
-
-# Main Menu
+# Main Menu for Linked List Operations
 head = None
 while True:
-    print("\n**** Main Menu ****")
-    print("1. INSERT AT END")
+    print("**** Main Menu ****")
+    print("1. INSERT END")
     print("2. DISPLAY")
-    print("3. INSERT AT FIRST")
-    print("4. COUNT")
-    print("5. SEARCH")
-    print("6. DELETE")
+    print("3. INSERT FIRST")
+    print("4. Count")
+    print("5. Search")
+    print("6. Deletion")
     print("0. EXIT")
     
     ch = int(input("Enter Your Choice: "))
@@ -95,32 +101,26 @@ while True:
     if ch == 1:
         n = int(input("Enter data: "))
         head = insert_end(head, n)
-    
     elif ch == 2:
         display(head)
-    
     elif ch == 3:
         n = int(input("Enter data: "))
         head = insert_first(head, n)
-    
     elif ch == 4:
-        print("No. of elements =", count(head))
-    
+        n = count(head)
+        if n > 0:
+            print("No. of elements =", n)
     elif ch == 5:
-        n = int(input("Enter data to search: "))
+        n = int(input("Enter data which you want: "))
         pos = search(head, n)
         if pos > 0:
-            print(f"Item found at position {pos}")
+            print("Item is in", pos, "th position")
         else:
             print("Item not found")
-    
     elif ch == 6:
-        n = int(input("Enter data to delete: "))
+        n = int(input("Enter data which you want to delete: "))
         head = deletion(head, n)
-    
     elif ch == 0:
-        print("Exiting program...")
-        break
-    
+        break  # Exit the program
     else:
-        print("Wrong Input! Please try again.")
+        print("Wrong Input")
