@@ -83,6 +83,34 @@ def deletion(head, n):
             temp = temp.next
         print("Item Not found")
         return head
+    
+# one insertion function to handle all insertion case
+def insert_at_position(head, item, position):
+    """Inserts a new node with 'item' at the given 'position' in the linked list."""
+    new_node = Node(item)
+
+    # Case 1: Insert at the beginning
+    if position == 1:
+        new_node.next = head
+        head = new_node
+        return head
+
+    # Traverse to the node before the desired position
+    temp = head
+    count = 1
+    while count < position - 1 and temp is not None:
+        temp = temp.next
+        count += 1
+
+    # Case 2: Position is out of bounds
+    if temp is None:
+        print("Position out of bounds")
+        return head
+
+    # Case 3: Insert at given position (middle or end)
+    new_node.next = temp.next
+    temp.next = new_node
+    return head
 
 # Main Menu for Linked List Operations
 head = None
@@ -94,6 +122,7 @@ while True:
     print("4. Count")
     print("5. Search")
     print("6. Deletion")
+    print("7. Insert At Position")
     print("0. EXIT")
     
     ch = int(input("Enter Your Choice: "))
@@ -120,6 +149,10 @@ while True:
     elif ch == 6:
         n = int(input("Enter data which you want to delete: "))
         head = deletion(head, n)
+    elif ch == 7:
+        n = int(input("Enter data which you want to Insert: "))
+        pos = int(input("Enter which position: "))
+        head = insert_at_position(head, n, pos)
     elif ch == 0:
         break  # Exit the program
     else:
