@@ -6,7 +6,7 @@ class PriorityQueue:
         """Add an item with its priority to the queue"""
         self.items.append((priority, item))
         # Sort items each time to keep them in priority order
-        self.items.sort(reverse=True)
+        self.items.sort()
     
     def pop(self):
         """Remove and return the item with highest priority (lowest number)"""
