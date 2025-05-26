@@ -34,12 +34,12 @@ class PriorityQueue:
 pq = PriorityQueue()
 
 # Add some tasks with different priorities
-pq.push("Do homework", 3)    # Lower numbers = higher priority
+pq.push("Do homework", 3)    # Higher numbers = higher priority
 pq.push("Eat lunch", 1)
 pq.push("Watch TV", 4)
 pq.push("Call mom", 2)
 
-print("What's next?", pq.peek())  # Eat lunch (priority 1)
+print("What's next?", pq.peek())  # Watch TV (priority 4)
 
 print("\nDoing tasks in order:")
 while not pq.is_empty():
